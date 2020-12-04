@@ -1,0 +1,356 @@
+
+mysql> show databases;
++--------------------------+
+| Database                 |
++--------------------------+
+| db                       |
+| information_schema       |
+| libary_management_system |
+| mysql                    |
+| performance_schema       |
+| sys                      |
++--------------------------+
+6 rows in set (0.02 sec)
+
+mysql> use db;
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_db |
++--------------+
+| bookissue    |
+| member       |
+| members      |
+| person       |
+| person1      |
++--------------+
+5 rows in set (0.08 sec)
+
+mysql> table members;
++-----------+-------------+----------------+---------------+----------------+----------------+
+| member_id | member_name | member_address | acc_open_date | mebership_type | penalty_amount |
++-----------+-------------+----------------+---------------+----------------+----------------+
+|         1 | neha        | pune           | 0000-00-00    | abc            |            250 |
+|         2 | neha        | pune           | 0000-00-00    | abc            |            250 |
+|         3 | mina        | pune           | 0000-00-00    | abc            |            250 |
+|         4 | NULL        | NULL           | 0000-00-00    | NULL           |           NULL |
+|         5 | NULL        | NULL           | 2020-06-01    | NULL           |           NULL |
+|         6 | NULL        | NULL           | 2020-06-01    | NULL           |           NULL |
++-----------+-------------+----------------+---------------+----------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select date_format(acc_open_date,'%d/%m/%Y') from members;
++---------------------------------------+
+| date_format(acc_open_date,'%d/%m/%Y') |
++---------------------------------------+
+| 00/00/0000                            |
+| 20/10/2020                            |
++---------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select date_format(acc_open_date,'%d/%M/%Y') from members;
++---------------------------------------+
+| date_format(acc_open_date,'%d/%M/%Y') |
++---------------------------------------+
+| NULL                                  |
+| 20/October/2020                       |
++---------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select date_format(acc_open_date,'%d-%M-%Y') from members;
++---------------------------------------+
+| date_format(acc_open_date,'%d-%M-%Y') |
++---------------------------------------+
+| NULL                                  |
+| 20-October-2020                       |
++---------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select date_format(acc_open_date,'%d-%M-%yy') from members;
++----------------------------------------+
+| date_format(acc_open_date,'%d-%M-%yy') |
++----------------------------------------+
+| NULL                                   |
+| 20-October-20y                         |
++----------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select date_format(acc_open_date,'%d-%b-%y') from members;
++---------------------------------------+
+| date_format(acc_open_date,'%d-%b-%y') |
++---------------------------------------+
+| NULL                                  |
+| 20-Oct-20                             |
++---------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%d-%b-%y')  from members where member_id=2;
++-----------------------------------+
+| date_format(curdate(),'%d-%b-%y') |
++-----------------------------------+
+| 04-Dec-20                         |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into members(member_id,member_name,member_address,acc_open_date,mebership_type) values(4,'Richa sharma','pune',now(),'annual');
+Query OK, 1 row affected, 1 warning (0.17 sec)
+
+mysql> select *from members;
++-----------+--------------+----------------+---------------+----------------+----------------+
+| member_id | member_name  | member_address | acc_open_date | mebership_type | penalty_amount |
++-----------+--------------+----------------+---------------+----------------+----------------+
+|         3 | mina         | pune           | 0000-00-00    | abc            |            250 |
+|         1 | Richa sharma | pune           | 2020-10-20    | lifetime       |            450 |
+|         2 | Richa sharma | pune           | NULL          | annual         |           NULL |
+|         4 | Richa sharma | pune           | 2020-12-04    | annual         |           NULL |
++-----------+--------------+----------------+---------------+----------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from members where member_id=2;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select *from members;
++-----------+--------------+----------------+---------------+----------------+----------------+
+| member_id | member_name  | member_address | acc_open_date | mebership_type | penalty_amount |
++-----------+--------------+----------------+---------------+----------------+----------------+
+|         3 | mina         | pune           | 0000-00-00    | abc            |            250 |
+|         1 | Richa sharma | pune           | 2020-10-20    | lifetime       |            450 |
+|         4 | Richa sharma | pune           | 2020-12-04    | annual         |           NULL |
++-----------+--------------+----------------+---------------+----------------+----------------+
+3 rows in set (0.07 sec)
+
+mysql> create table if not exists books(book_no numeric,book_name varchar(30),author_name varchar(30),cost numeric,category char(10));
+Query OK, 0 rows affected (1.39 sec)
+
+mysql> desc books;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| book_no     | decimal(10,0) | YES  |     | NULL    |       |
+| book_name   | varchar(30)   | YES  |     | NULL    |       |
+| author_name | varchar(30)   | YES  |     | NULL    |       |
+| cost        | decimal(10,0) | YES  |     | NULL    |       |
+| category    | char(10)      | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+5 rows in set (0.16 sec)
+
+mysql> select *from books;
++---------+---------------------+---------------+------+----------+
+| book_no | book_name           | author_name   | cost | category |
++---------+---------------------+---------------+------+----------+
+|     101 | Let us C            | Denis Ritchie |  420 | System   |
+|     102 | Oracle Complete Ref | Loni          |  550 | Database |
+|     103 | Mastering SQL       | Loni          |  250 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
+|     103 | Mastering SQL       | Loni          |  250 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
++---------+---------------------+---------------+------+----------+
+6 rows in set (0.00 sec)
+
+mysql> update books set cost=300 where book_no=103;
+Query OK, 2 rows affected (0.11 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select *from books;
++---------+---------------------+---------------+------+----------+
+| book_no | book_name           | author_name   | cost | category |
++---------+---------------------+---------------+------+----------+
+|     101 | Let us C            | Denis Ritchie |  420 | System   |
+|     102 | Oracle Complete Ref | Loni          |  550 | Database |
+|     103 | Mastering SQL       | Loni          |  300 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
+|     103 | Mastering SQL       | Loni          |  300 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
++---------+---------------------+---------------+------+----------+
+6 rows in set (0.07 sec)
+
+mysql> show tables;
++--------------+
+| Tables_in_db |
++--------------+
+| bookissue    |
+| books        |
+| issue        |
+| m            |
+| m1           |
+| m3           |
+| member       |
+| members      |
+| members1     |
+| members2     |
+| person       |
+| person1      |
++--------------+
+12 rows in set (0.04 sec)
+
+mysql> drop table issue;
+Query OK, 0 rows affected (1.44 sec)
+
+mysql> show tables;
++--------------+
+| Tables_in_db |
++--------------+
+| bookissue    |
+| books        |
+| m            |
+| m1           |
+| m3           |
+| member       |
+| members      |
+| members1     |
+| members2     |
+| person       |
+| person1      |
++--------------+
+11 rows in set (0.11 sec)
+
+mysql> select *from members;
++-----------+--------------+----------------+---------------+----------------+----------------+
+| member_id | member_name  | member_address | acc_open_date | mebership_type | penalty_amount |
++-----------+--------------+----------------+---------------+----------------+----------------+
+|         3 | mina         | pune           | 0000-00-00    | abc            |            250 |
+|         1 | Richa sharma | pune           | 2020-10-20    | lifetime       |            450 |
+|         4 | Richa sharma | pune           | 2020-12-04    | annual         |           NULL |
++-----------+--------------+----------------+---------------+----------------+----------------+
+3 rows in set (0.06 sec)
+
+mysql> alter table members drop column penalty_amount;
+Query OK, 0 rows affected (3.23 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from members;
++-----------+--------------+----------------+---------------+----------------+
+| member_id | member_name  | member_address | acc_open_date | mebership_type |
++-----------+--------------+----------------+---------------+----------------+
+|         3 | mina         | pune           | 0000-00-00    | abc            |
+|         1 | Richa sharma | pune           | 2020-10-20    | lifetime       |
+|         4 | Richa sharma | pune           | 2020-12-04    | annual         |
++-----------+--------------+----------------+---------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from books;
++---------+---------------------+---------------+------+----------+
+| book_no | book_name           | author_name   | cost | category |
++---------+---------------------+---------------+------+----------+
+|     101 | Let us C            | Denis Ritchie |  420 | System   |
+|     102 | Oracle Complete Ref | Loni          |  550 | Database |
+|     103 | Mastering SQL       | Loni          |  300 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
+|     103 | Mastering SQL       | Loni          |  300 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
++---------+---------------------+---------------+------+----------+
+6 rows in set (0.04 sec)
+
+mysql> select book_name,cost from books where book_no=103;
++---------------+------+
+| book_name     | cost |
++---------------+------+
+| Mastering SQL |  300 |
+| Mastering SQL |  300 |
++---------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select book_name,cost*12+300 from books;
++---------------------+-------------+
+| book_name           | cost*12+300 |
++---------------------+-------------+
+| Let us C            |        5340 |
+| Oracle Complete Ref |        6900 |
+| Mastering SQL       |        3900 |
+| PL SQL-Ref          |        9300 |
+| Mastering SQL       |        3900 |
+| PL SQL-Ref          |        9300 |
++---------------------+-------------+
+6 rows in set (0.05 sec)
+
+mysql> select book_name,cost*12+300 from books where book_no in (101,104);
++------------+-------------+
+| book_name  | cost*12+300 |
++------------+-------------+
+| Let us C   |        5340 |
+| PL SQL-Ref |        9300 |
+| PL SQL-Ref |        9300 |
++------------+-------------+
+3 rows in set (0.01 sec)
+
+mysql> select book_name,cost*12+300 from books where book_no in (101,104,102);
++---------------------+-------------+
+| book_name           | cost*12+300 |
++---------------------+-------------+
+| Let us C            |        5340 |
+| Oracle Complete Ref |        6900 |
+| PL SQL-Ref          |        9300 |
+| PL SQL-Ref          |        9300 |
++---------------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select book_name,cost*12+300 from books where cost between 400 and 750;
++---------------------+-------------+
+| book_name           | cost*12+300 |
++---------------------+-------------+
+| Let us C            |        5340 |
+| Oracle Complete Ref |        6900 |
+| PL SQL-Ref          |        9300 |
+| PL SQL-Ref          |        9300 |
++---------------------+-------------+
+4 rows in set (0.04 sec)
+
+mysql> select book_name,cost from books where cost between 400 and 750;
++---------------------+------+
+| book_name           | cost |
++---------------------+------+
+| Let us C            |  420 |
+| Oracle Complete Ref |  550 |
+| PL SQL-Ref          |  750 |
+| PL SQL-Ref          |  750 |
++---------------------+------+
+4 rows in set (0.00 sec)
+
+mysql> select *from books;
++---------+---------------------+---------------+------+----------+
+| book_no | book_name           | author_name   | cost | category |
++---------+---------------------+---------------+------+----------+
+|     101 | Let us C            | Denis Ritchie |  420 | System   |
+|     102 | Oracle Complete Ref | Loni          |  550 | Database |
+|     103 | Mastering SQL       | Loni          |  300 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
+|     103 | Mastering SQL       | Loni          |  300 | Dtabase  |
+|     104 | PL SQL-Ref          | ScottUrman    |  750 | Database |
++---------+---------------------+---------------+------+----------+
+6 rows in set (0.00 sec)
+
+
+mysql> create table Issue(Lib_issue_id numeric(10),Book_No numeric(6),Member_Id numeric(5),Issue_Date date,Return_Date date);
+Query OK, 0 rows affected (2.45 sec)
+
+mysql> insert into Issue (Lib_issue_id,Book_No,Member_Id,Issue_Date) values(7001,101,1,STR_TO_DATE('10-Dec-2006','%d-%M-%Y'));
+Query OK, 1 row affected (0.31 sec)
+
+mysql> insert into Issue (Lib_issue_id,Book_No,Member_Id,Issue_Date) values(7002,102,2,STR_TO_DATE('25-Dec-2006','%d-%M-%Y'));
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into Issue (Lib_issue_id,Book_No,Member_Id,Issue_Date) values(7003,104,1,STR_TO_DATE('15-Jan-2006','%d-%M-%Y'));
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into Issue (Lib_issue_id,Book_No,Member_Id,Issue_Date) values(7004,101,1,STR_TO_DATE('04-July-2006','%d-%M-%Y'));
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into Issue (Lib_issue_id,Book_No,Member_Id,Issue_Date) values(7006,101,3,STR_TO_DATE('18-Feb-2006','%d-%M-%Y'));
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select *from Issue;
++--------------+---------+-----------+------------+-------------+
+| Lib_issue_id | Book_No | Member_Id | Issue_Date | Return_Date |
++--------------+---------+-----------+------------+-------------+
+|         7001 |     101 |         1 | 2006-12-10 | NULL        |
+|         7002 |     102 |         2 | 2006-12-25 | NULL        |
+|         7003 |     104 |         1 | 2006-01-15 | NULL        |
+|         7004 |     101 |         1 | 2006-07-04 | NULL        |
+|         7006 |     101 |         3 | 2006-02-18 | NULL        |
++--------------+---------+-----------+------------+-------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
