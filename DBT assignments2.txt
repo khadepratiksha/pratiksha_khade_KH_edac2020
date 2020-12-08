@@ -1,0 +1,1328 @@
+
+
+mysql> create table publishers(pubid numeric(3) primary key,pname varchar(30),email varchar(30) unique,phone varchar(30));
+Query OK, 0 rows affected (2.19 sec)
+
+mysql> desc publishers;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pubid | decimal(3,0) | NO   | PRI | NULL    |       |
+| pname | varchar(30)  | YES  |     | NULL    |       |
+| email | varchar(30)  | YES  | UNI | NULL    |       |
+| phone | varchar(30)  | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.23 sec)
+
+mysql> create table subject(subid varchar(5) primary key,sname varchar(30));
+Query OK, 0 rows affected (1.45 sec)
+
+mysql> create table author(auid numeric(5) primary key,aname varchar(30),email varchar(30) unique,phone varchar(30));
+Query OK, 0 rows affected (1.34 sec)
+
+
+mysql> create table titles(titleid numeric(5) primary key,title varchar(30),pubid numeric(3),pubdate date,subid varchar(5),cover char(1) check(cover IN('P','H','p','h')),price numeric(4),constraint titles_p_fk foreign key(pubid) references publishers(pubid),constraint title_s_fk foreign key (subid) references subject(subid));
+Query OK, 0 rows affected (1.94 sec)
+
+
+
+mysql> desc titles;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| titleid | decimal(5,0) | NO   | PRI | NULL    |       |
+| title   | varchar(30)  | YES  |     | NULL    |       |
+| pubid   | decimal(3,0) | YES  | MUL | NULL    |       |
+| pubdate | date         | YES  |     | NULL    |       |
+| subid   | varchar(5)   | YES  | MUL | NULL    |       |
+| cover   | char(1)      | YES  |     | NULL    |       |
+| price   | decimal(4,0) | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> create table authors(auid numeric(5) primary key,aname varchar(30),email varchar(50) unique,phon varchar(30));
+Query OK, 0 rows affected (1.02 sec)
+
+
+mysql> create table titleauthors(titleid numeric(5),auid numeric(5),importance numeric(2),constraint title_title_fk foreign key(titleid) references titles(titleid),constraint titleau_auth_fk foreign key (auid) references authors(auid));
+Query OK, 0 rows affected (1.15 sec)
+
+mysql> desc authors;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| auid  | decimal(5,0) | NO   | PRI | NULL    |       |
+| aname | varchar(30)  | YES  |     | NULL    |       |
+| email | varchar(50)  | YES  | UNI | NULL    |       |
+| phon  | varchar(30)  | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.06 sec)
+
+mysql>
+mysql> mysql> desc titles;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> desc titles' at line 1
+mysql> +---------+--------------+------+-----+---------+-------+
+    -> | Field   | Type         | Null | Key | Default | Extra |
+    -> +---------+--------------+------+-----+---------+-------+
+    -> | titleid | decimal(5,0) | NO   | PRI | NULL    |       |
+    -> | title   | varchar(30)  | YES  |     | NULL    |       |
+    -> | pubid   | decimal(3,0) | YES  | MUL | NULL    |       |
+    -> | pubdate | date         | YES  |     | NULL    |       |
+    -> | subid   | varchar(5)   | YES  | MUL | NULL    |       |
+    -> | cover   | char(1)      | YES  |     | NULL    |       |
+    -> | price   | decimal(4,0) | YES  |     | NULL    |       |
+    -> +---------+--------------+------+-----+---------+-------+
+    -> 7 rows in set (0.01 sec)
+
+
+mysql> create table subject_backup( subid varchar(5) primary key,sname varchar(30));
+Query OK, 0 rows affected (1.44 sec)
+
+mysql> desc subject_backup;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| subid | varchar(5)  | NO   | PRI | NULL    |       |
+| sname | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.13 sec)
+
+mysql>
+mysql> insert into subject values('ora','oracle database 10g');
+Query OK, 1 row affected (0.14 sec)
+
+mysql>  insert into subject values('jee','java enteprice edition'),('java','java language'),,('vb','virtual basic.net');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',('vb','virtual basic.net')' at line 1
+mysql>  insert into subject values('jee','java enteprice edition'),('java','java language'),('vb','virtual basic.net');
+Query OK, 3 rows affected (0.15 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into subject values('ASP','ASP.NET');
+Query OK, 1 row affected (0.13 sec)
+
+
+mysql>  insert into publishers values(101, 'HERBERT SCHILD','HERBERT@YAHOO.COM',NULL),(102, 'JAMES GOODWILL','GOODWILL@HOTMAIL.COM',NULL),(103, 'DAVAID HUNTER','HUNTER@HOTMAIL.COM',NULL),(104, 'STEPHEN WALTHER','WALTHER@GMAIL.COM',NULL),(105, 'KEVIN LONEY','LONEY@ORACLE.COM',NULL),(106, 'ED. ROMANS','ROMANS@THESERVERSIDE.COM',NULL);
+Query OK, 6 rows affected (0.30 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select *from publishers;
++-------+-----------------+--------------------------+-------+
+| pubid | pname           | email                    | phone |
++-------+-----------------+--------------------------+-------+
+|   101 | HERBERT SCHILD  | HERBERT@YAHOO.COM        | NULL  |
+|   102 | JAMES GOODWILL  | GOODWILL@HOTMAIL.COM     | NULL  |
+|   103 | DAVAID HUNTER   | HUNTER@HOTMAIL.COM       | NULL  |
+|   104 | STEPHEN WALTHER | WALTHER@GMAIL.COM        | NULL  |
+|   105 | KEVIN LONEY     | LONEY@ORACLE.COM         | NULL  |
+|   106 | ED. ROMANS      | ROMANS@THESERVERSIDE.COM | NULL  |
++-------+-----------------+--------------------------+-------+
+6 rows in set (0.00 sec)
+
+
+mysql> delete from publishers where pubid=102;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> delete from publishers where pubid=103;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> delete from publishers where pubid=104;
+Query OK, 1 row affected (0.17 sec)
+
+mysql> delete from publishers where pubid=105;
+Query OK, 1 row affected (0.12 sec)
+
+mysql> delete from publishers where pubid=106;
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select *from publishers;
+Empty set (0.00 sec)
+
+mysql> mysql> select *from publishers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> select *from publishers' at line 1
+mysql> +-------+-----------------+--------------------------+-------+
+    -> | pubid | pname           | email                    | phone |
+    -> +-------+-----------------+--------------------------+-------+
+    -> |   101 | HERBERT SCHILD  | HERBERT@YAHOO.COM        | NULL  |
+    -> |   102 | JAMES GOODWILL  | GOODWILL@HOTMAIL.COM     | NULL  |
+    -> |   103 | DAVAID HUNTER   | HUNTER@HOTMAIL.COM       | NULL  |
+    -> |   104 | STEPHEN WALTHER | WALTHER@GMAIL.COM        | NULL  |
+    -> |   105 | KEVIN LONEY     | LONEY@ORACLE.COM         | NULL  |
+    -> |   106 | ED. ROMANS      | ROMANS@THESERVERSIDE.COM | NULL  |
+    -> +-------+-----------------+--------------------------+-------+
+    -> 6 rows in set (0.00 sec)
+
+
+
+mysql> INSERT INTO PUBLISHERS VALUES (1,'WILLEY','WDT@VSNL.NET','91-11-23260877');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> INSERT INTO PUBLISHERS VALUES (2,'WROX','INFO@WROX.COM',NULL);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> INSERT INTO PUBLISHERS VALUES (3,'TATA MCGRAW-HILL','FEEDBACK@TATAMCGRAWHILL.COM','91-11-33333322');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO PUBLISHERS VALUES (4,'TECHMEDIA','BOOKS@TECHMEDIA.COM','91-11-33257660');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select *from publishers;
++-------+------------------+-----------------------------+----------------+
+| pubid | pname            | email                       | phone          |
++-------+------------------+-----------------------------+----------------+
+|     1 | WILLEY           | WDT@VSNL.NET                | 91-11-23260877 |
+|     2 | WROX             | INFO@WROX.COM               | NULL           |
+|     3 | TATA MCGRAW-HILL | FEEDBACK@TATAMCGRAWHILL.COM | 91-11-33333322 |
+|     4 | TECHMEDIA        | BOOKS@TECHMEDIA.COM         | 91-11-33257660 |
++-------+------------------+-----------------------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO AUTHORS VALUES (101, 'HERBERT SCHILD','HERBERT@YAHOO.COM',NULL),(102, 'JAMES GOODWILL','GOODWILL@HOTMAIL.COM',NULL),(103, 'DAVAID HUNTER','HUNTER@HOTMAIL.COM',NULL),(104, 'STEPHEN WALTHER','WALTHER@GMAIL.COM',NULL),(105, 'KEVIN LONEY','LONEY@ORACLE.COM',NULL),(106, 'ED. ROMANS','ROMANS@THESERVERSIDE.COM',NULL);
+Query OK, 6 rows affected (0.18 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select *from authors;
++------+-----------------+--------------------------+------+
+| auid | aname           | email                    | phon |
++------+-----------------+--------------------------+------+
+|  101 | HERBERT SCHILD  | HERBERT@YAHOO.COM        | NULL |
+|  102 | JAMES GOODWILL  | GOODWILL@HOTMAIL.COM     | NULL |
+|  103 | DAVAID HUNTER   | HUNTER@HOTMAIL.COM       | NULL |
+|  104 | STEPHEN WALTHER | WALTHER@GMAIL.COM        | NULL |
+|  105 | KEVIN LONEY     | LONEY@ORACLE.COM         | NULL |
+|  106 | ED. ROMANS      | ROMANS@THESERVERSIDE.COM | NULL |
++------+-----------------+--------------------------+------+
+6 rows in set (0.00 sec)
+
+
+mysql> desc titleauthors;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| titleid    | decimal(5,0) | YES  | MUL | NULL    |       |
+| auid       | decimal(5,0) | YES  | MUL | NULL    |       |
+| importance | decimal(2,0) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+3 rows in set (0.53 sec)
+
+mysql> select *from titleauthors;
+Empty set (0.23 sec)
+
+mysql> INSERT INTO TITLEAUTHORS VALUES (1001,104,1);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO TITLEAUTHORS VALUES (1002,105,1),(1003,106,1),(1004,101,1),(1005,103,1),(1005,102,2);
+Query OK, 5 rows affected (0.18 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from titleauthors;
++---------+------+------------+
+| titleid | auid | importance |
++---------+------+------------+
+|    1001 |  104 |          1 |
+|    1002 |  105 |          1 |
+|    1003 |  106 |          1 |
+|    1004 |  101 |          1 |
+|    1005 |  103 |          1 |
+|    1005 |  102 |          2 |
++---------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname from subject where sname like 'oracle%';
++---------------------+
+| sname               |
++---------------------+
+| oracle database 10g |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select *from subject where sname like 'j%';
++-------+------------------------+
+| subid | sname                  |
++-------+------------------------+
+| java  | java language          |
+| jee   | java enteprice edition |
++-------+------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select sname from subject where sname like '%.net';
++-------------------+
+| sname             |
++-------------------+
+| ASP.NET           |
+| virtual basic.net |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> select aname from authors where aname like '%ER';
++-----------------+
+| aname           |
++-----------------+
+| DAVAID HUNTER   |
+| STEPHEN WALTHER |
++-----------------+
+2 rows in set (0.00 sec)
+
+
+mysql> select *from publishers;
++-------+------------------+-----------------------------+----------------+
+| pubid | pname            | email                       | phone          |
++-------+------------------+-----------------------------+----------------+
+|     1 | WILLEY           | WDT@VSNL.NET                | 91-11-23260877 |
+|     2 | WROX             | INFO@WROX.COM               | NULL           |
+|     3 | TATA MCGRAW-HILL | FEEDBACK@TATAMCGRAWHILL.COM | 91-11-33333322 |
+|     4 | TECHMEDIA        | BOOKS@TECHMEDIA.COM         | 91-11-33257660 |
++-------+------------------+-----------------------------+----------------+
+4 rows in set (0.02 sec)
+
+mysql> select pname from publishers where pname like '%HILL';
++------------------+
+| pname            |
++------------------+
+| TATA MCGRAW-HILL |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select *from titles;
++---------+----------------------+-------+------------+-------+-------+-------+
+| titleid | title                | pubid | pubdate    | subid | cover | price |
++---------+----------------------+-------+------------+-------+-------+-------+
+|    1001 | ASP.NET UNLEASHED    |     4 | 2012-04-02 | ASP   | P     |   540 |
+|    1002 | ORACLE10G COMP. REF. |     3 | 0001-05-05 | ORA   | P     |   575 |
+|    1003 | MASTERING EJB        |     1 | 0003-02-05 | JEE   | P     |   475 |
+|    1004 | JAVA COMP. REF       |     3 | 0003-04-05 | JAVA  | P     |   499 |
+|    1005 | PRO. VB.NET          |     2 | 2015-01-05 | VB    | P     |   450 |
++---------+----------------------+-------+------------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select title from titles where price >500;
++----------------------+
+| title                |
++----------------------+
+| ASP.NET UNLEASHED    |
+| ORACLE10G COMP. REF. |
++----------------------+
+2 rows in set (0.00 sec)
+
+mysql> select title from titles where pubdate < '0003-04-05';
++----------------------+
+| title                |
++----------------------+
+| ORACLE10G COMP. REF. |
+| MASTERING EJB        |
++----------------------+
+2 rows in set (0.00 sec)
+
+
+mysql> select sname from subject where subid like '%java%' or subid like '%jee%';
++------------------------+
+| sname                  |
++------------------------+
+| java language          |
+| java enteprice edition |
++------------------------+
+2 rows in set (0.00 sec)
+
+
+mysql> select aname from authors where auid >103;
++-----------------+
+| aname           |
++-----------------+
+| STEPHEN WALTHER |
+| KEVIN LONEY     |
+| ED. ROMANS      |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from titles where titleid=1001 or price>400;
++---------+----------------------+-------+------------+-------+-------+-------+
+| titleid | title                | pubid | pubdate    | subid | cover | price |
++---------+----------------------+-------+------------+-------+-------+-------+
+|    1001 | ASP.NET UNLEASHED    |     4 | 2012-04-02 | ASP   | P     |   540 |
+|    1002 | ORACLE10G COMP. REF. |     3 | 0001-05-05 | ORA   | P     |   575 |
+|    1003 | MASTERING EJB        |     1 | 0003-02-05 | JEE   | P     |   475 |
+|    1004 | JAVA COMP. REF       |     3 | 0003-04-05 | JAVA  | P     |   499 |
+|    1005 | PRO. VB.NET          |     2 | 2015-01-05 | VB    | P     |   450 |
++---------+----------------------+-------+------------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select *from publishers where pname IN('TECHMEDIA','WROX');
++-------+-----------+---------------------+----------------+
+| pubid | pname     | email               | phone          |
++-------+-----------+---------------------+----------------+
+|     2 | WROX      | INFO@WROX.COM       | NULL           |
+|     4 | TECHMEDIA | BOOKS@TECHMEDIA.COM | 91-11-33257660 |
++-------+-----------+---------------------+----------------+
+2 rows in set (0.00 sec)
+
+
+mysql> select MAX(price) from titles;
++------------+
+| MAX(price) |
++------------+
+|        575 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from authors;
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(cost) from books;
++-----------+
+| sum(cost) |
++-----------+
+|      3070 |
++-----------+
+1 row in set (0.00 sec)
+
+
+mysql> select find_in_set('m','s,l,m,z');
++----------------------------+
+| find_in_set('m','s,l,m,z') |
++----------------------------+
+|                          3 |
++----------------------------+
+1 row in set (0.10 sec)
+
+mysql> create table emp(sal float(7,3));
+Query OK, 0 rows affected, 1 warning (2.22 sec)
+
+mysql> desc emp;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| sal   | float(7,3) | YES  |     | NULL    |       |
++-------+------------+------+-----+---------+-------+
+1 row in set (0.15 sec)
+
+mysql> insert into emp value(1234.567);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select *from emp;
++----------+
+| sal      |
++----------+
+| 1234.567 |
++----------+
+1 row in set (0.04 sec)
+
+
+mysql> insert into emp value(1530.019);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into emp value(1652.786);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp value(1775.156);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select *from emp;
++----------+
+| sal      |
++----------+
+| 1234.567 |
+| 1530.019 |
+| 1652.786 |
+| 1775.156 |
++----------+
+4 rows in set (0.00 sec)
+
+
+mysql> select round(sal) from emp;
++------------+
+| round(sal) |
++------------+
+|       1235 |
+|       1530 |
+|       1653 |
+|       1775 |
++------------+
+4 rows in set (0.03 sec)
+
+mysql> select ceil(sal) from emp;
++-----------+
+| ceil(sal) |
++-----------+
+|      1235 |
+|      1531 |
+|      1653 |
+|      1776 |
++-----------+
+4 rows in set (0.06 sec)
+
+
+mysql> select sign(-15) from emp;
++-----------+
+| sign(-15) |
++-----------+
+|        -1 |
+|        -1 |
+|        -1 |
+|        -1 |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> select sqrt(sal) from emp;
++--------------------+
+| sqrt(sal)          |
++--------------------+
+| 35.136405857764714 |
+|  39.11545785196372 |
+|  40.65447098096576 |
+|   42.1326002741271 |
++--------------------+
+4 rows in set (0.04 sec)
+
+
+mysql> select mod(1530.019,5);
++-----------------+
+| mod(1530.019,5) |
++-----------------+
+|           0.019 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select power(1530.019,2);
++-------------------+
+| power(1530.019,2) |
++-------------------+
+|    2340958.140361 |
++-------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select char_length(ename) as name from emp;
++------+
+| name |
++------+
+| NULL |
+| NULL |
+|    9 |
+|    4 |
++------+
+4 rows in set (0.05 sec)
+
+mysql> select character_length(ename) as name from emp;
++------+
+| name |
++------+
+| NULL |
+| NULL |
+|    9 |
+|    4 |
++------+
+4 rows in set (0.00 sec)
+
+
+mysql> select concat('neha','pratiksha') as name from emp;
++---------------+
+| name          |
++---------------+
+| nehapratiksha |
+| nehapratiksha |
+| nehapratiksha |
+| nehapratiksha |
++---------------+
+4 rows in set (0.04 sec)
+
+mysql> select concat_ws('_','neha','pratiksha') as name from emp;
++----------------+
+| name           |
++----------------+
+| neha_pratiksha |
+| neha_pratiksha |
+| neha_pratiksha |
+| neha_pratiksha |
++----------------+
+4 rows in set (0.00 sec)
+
+mysql> select field('neha','q','neha');
++--------------------------+
+| field('neha','q','neha') |
++--------------------------+
+|                        2 |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> select format(22206.569,2);
++---------------------+
+| format(22206.569,2) |
++---------------------+
+| 22,206.57           |
++---------------------+
+1 row in set (0.06 sec)
+
+mysql> select insert('w3test.com',1,2,'ex');
++-------------------------------+
+| insert('w3test.com',1,2,'ex') |
++-------------------------------+
+| extest.com                    |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select instr('hello','l') as string;
++--------+
+| string |
++--------+
+|      3 |
++--------+
+1 row in set (0.07 sec)
+
+mysql> select instr('hello','e') as string;
++--------+
+| string |
++--------+
+|      2 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select lcase('PRIYA');
++----------------+
+| lcase('PRIYA') |
++----------------+
+| priya          |
++----------------+
+1 row in set (0.02 sec)
+
+
+mysql> select upper('neha');
++---------------+
+| upper('neha') |
++---------------+
+| NEHA          |
++---------------+
+1 row in set (0.03 sec)
+
+mysql> select upper('neha');
++---------------+
+| upper('neha') |
++---------------+
+| NEHA          |
++---------------+
+1 row in set (0.03 sec)
+
+mysql> select ucase('neha');
++---------------+
+| ucase('neha') |
++---------------+
+| NEHA          |
++---------------+
+1 row in set (0.00 sec)
+
+
+mysql> select trim('    hello java   ');
++---------------------------+
+| trim('    hello java   ') |
++---------------------------+
+| hello java                |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> select trim(upper('    hello java   '));
++----------------------------------+
+| trim(upper('    hello java   ')) |
++----------------------------------+
+| HELLO JAVA                       |
++----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select substring_index("hello-java",'-',1);
++-------------------------------------+
+| substring_index("hello-java",'-',1) |
++-------------------------------------+
+| hello                               |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select left('hello java',3);
++----------------------+
+| left('hello java',3) |
++----------------------+
+| hel                  |
++----------------------+
+1 row in set (0.01 sec)
+
+mysql> select length('hello pratiksha');
++---------------------------+
+| length('hello pratiksha') |
++---------------------------+
+|                        15 |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> select locate('3','w3hello');
++-----------------------+
+| locate('3','w3hello') |
++-----------------------+
+|                     2 |
++-----------------------+
+1 row in set (0.06 sec)
+
+
+mysql> select lpad('sql tutorial',13,'ABC');
++-------------------------------+
+| lpad('sql tutorial',13,'ABC') |
++-------------------------------+
+| Asql tutorial                 |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LTRIM("     SQL Tutorial");
++----------------------------+
+| LTRIM("     SQL Tutorial") |
++----------------------------+
+| SQL Tutorial               |
++----------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LTRIM("     SQL Tutorial");
++----------------------------+
+| LTRIM("     SQL Tutorial") |
++----------------------------+
+| SQL Tutorial               |
++----------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select position('3' in 'hello3 java');
++--------------------------------+
+| position('3' in 'hello3 java') |
++--------------------------------+
+|                              6 |
++--------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select repeat('hello ',2);
++--------------------+
+| repeat('hello ',2) |
++--------------------+
+| hello hello        |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select replace('html query','html','sql');
++------------------------------------+
+| replace('html query','html','sql') |
++------------------------------------+
+| sql query                          |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select reverse(ename) from emp;
++----------------+
+| reverse(ename) |
++----------------+
+| NULL           |
+| NULL           |
+| ahskitarp      |
+| ahen           |
+| AYIRP          |
++----------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select right('hello core java',3);
++----------------------------+
+| right('hello core java',3) |
++----------------------------+
+| ava                        |
++----------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select rpad('hello pratiksha',25,' java');
++------------------------------------+
+| rpad('hello pratiksha',25,' java') |
++------------------------------------+
+| hello pratiksha java java          |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select rpad('hello pratiksha',25,'java');
++-----------------------------------+
+| rpad('hello pratiksha',25,'java') |
++-----------------------------------+
+| hello pratikshajavajavaja         |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select rpad('hello pratiksha',15,'java');
++-----------------------------------+
+| rpad('hello pratiksha',15,'java') |
++-----------------------------------+
+| hello pratiksha                   |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select rpad('hello pratiksha',10,'java');
++-----------------------------------+
+| rpad('hello pratiksha',10,'java') |
++-----------------------------------+
+| hello prat                        |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select rtrim('hello pratiksha    ') as name;
++-----------------+
+| name            |
++-----------------+
+| hello pratiksha |
++-----------------+
+1 row in set (0.00 sec)
+
+
+mysql> select space(10);
++------------+
+| space(10)  |
++------------+
+|            |
++------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT STRCMP("SQL Tutorial", "SQL Tutorial");
++----------------------------------------+
+| STRCMP("SQL Tutorial", "SQL Tutorial") |
++----------------------------------------+
+|                                      0 |
++----------------------------------------+
+1 row in set (0.07 sec)
+
+mysql> SELECT STRCMP("SQL Tutorial", "SQL Tutor");
++-------------------------------------+
+| STRCMP("SQL Tutorial", "SQL Tutor") |
++-------------------------------------+
+|                                   1 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT STRCMP("SQL Tutorial", "java");
++--------------------------------+
+| STRCMP("SQL Tutorial", "java") |
++--------------------------------+
+|                              1 |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select substr('core java',5,1) as string;
++--------+
+| string |
++--------+
+|        |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select substr('core java',5,2) as string;
++--------+
+| string |
++--------+
+|  j     |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select substring('core java',5,2) as string;
++--------+
+| string |
++--------+
+|  j     |
++--------+
+1 row in set (0.00 sec)
+
+***************************************************************************
+mysql> select adddate('2020-12-28', interval 10 day);
++----------------------------------------+
+| adddate('2020-12-28', interval 10 day) |
++----------------------------------------+
+| 2021-01-07                             |
++----------------------------------------+
+1 row in set (0.06 sec)
+
+mysql> select addtime('2017-06-16 09:04:21','5');
++------------------------------------+
+| addtime('2017-06-16 09:04:21','5') |
++------------------------------------+
+| 2017-06-16 09:04:26                |
++------------------------------------+
+1 row in set (0.04 sec)
+
+mysql> select addtime('2017-06-16 09:04:21','60');
++-------------------------------------+
+| addtime('2017-06-16 09:04:21','60') |
++-------------------------------------+
+| NULL                                |
++-------------------------------------+
+1 row in set, 1 warning (0.05 sec)
+
+mysql> select addtime('2017-06-16 09:04:21','01:00:00');
++-------------------------------------------+
+| addtime('2017-06-16 09:04:21','01:00:00') |
++-------------------------------------------+
+| 2017-06-16 10:04:21                       |
++-------------------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select curdate();
++------------+
+| curdate()  |
++------------+
+| 2020-12-08 |
++------------+
+1 row in set (0.00 sec)
+
+
+mysql> select current_date();
++----------------+
+| current_date() |
++----------------+
+| 2020-12-08     |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select current_time();
++----------------+
+| current_time() |
++----------------+
+| 15:02:42       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select current_timestamp();
++---------------------+
+| current_timestamp() |
++---------------------+
+| 2020-12-08 15:03:20 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select curtime();
++-----------+
+| curtime() |
++-----------+
+| 15:04:11  |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select date('2017-06-15');
++--------------------+
+| date('2017-06-15') |
++--------------------+
+| 2017-06-15         |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff('2017-06-15','2020-06-15');
++-------------------------------------+
+| datediff('2017-06-15','2020-06-15') |
++-------------------------------------+
+|                               -1096 |
++-------------------------------------+
+1 row in set (0.06 sec)
+
+mysql> select datediff('2017-06-15','2016-06-10');
++-------------------------------------+
+| datediff('2017-06-15','2016-06-10') |
++-------------------------------------+
+|                                 370 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_ADD("2017-06-15", INTERVAL 10 DAY);
++-----------------------------------------+
+| DATE_ADD("2017-06-15", INTERVAL 10 DAY) |
++-----------------------------------------+
+| 2017-06-25                              |
++-----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2017-06-15", "%Y");
++---------------------------------+
+| DATE_FORMAT("2017-06-15", "%Y") |
++---------------------------------+
+| 2017                            |
++---------------------------------+
+1 row in set (0.04 sec)
+
+mysql> SELECT DATE_FORMAT("2017-06-15", "%Y%m");
++-----------------------------------+
+| DATE_FORMAT("2017-06-15", "%Y%m") |
++-----------------------------------+
+| 201706                            |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2017-06-15", "%Y-%m");
++------------------------------------+
+| DATE_FORMAT("2017-06-15", "%Y-%m") |
++------------------------------------+
+| 2017-06                            |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_SUB("2017-06-15", INTERVAL 10 DAY);
++-----------------------------------------+
+| DATE_SUB("2017-06-15", INTERVAL 10 DAY) |
++-----------------------------------------+
+| 2017-06-05                              |
++-----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_SUB("2017-06-15 09:34:21", INTERVAL 15 MINUTE);
++-----------------------------------------------------+
+| DATE_SUB("2017-06-15 09:34:21", INTERVAL 15 MINUTE) |
++-----------------------------------------------------+
+| 2017-06-15 09:19:21                                 |
++-----------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAY(CURDATE());
++----------------+
+| DAY(CURDATE()) |
++----------------+
+|              8 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAY('2000-06-12');
++-------------------+
+| DAY('2000-06-12') |
++-------------------+
+|                12 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYname('2000-06-12');
++-----------------------+
+| DAYname('2000-06-12') |
++-----------------------+
+| Monday                |
++-----------------------+
+1 row in set (0.06 sec)
+
+mysql> SELECT DAYname(CURDATE());
++--------------------+
+| DAYname(CURDATE()) |
++--------------------+
+| Tuesday            |
++--------------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT DAYOFMONTH(CURDATE());
++-----------------------+
+| DAYOFMONTH(CURDATE()) |
++-----------------------+
+|                     8 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYOFWEEK(curdate());
++----------------------+
+| DAYOFWEEK(curdate()) |
++----------------------+
+|                    3 |
++----------------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT DAYOFWEEK("2017-06-15 09:34:21");
++----------------------------------+
+| DAYOFWEEK("2017-06-15 09:34:21") |
++----------------------------------+
+|                                5 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select extract(month from '2017-06-15');
++----------------------------------+
+| extract(month from '2017-06-15') |
++----------------------------------+
+|                                6 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select extract(month from '2017-09-15');
++----------------------------------+
+| extract(month from '2017-09-15') |
++----------------------------------+
+|                                9 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select extract(day from '2017-09-15');
++--------------------------------+
+| extract(day from '2017-09-15') |
++--------------------------------+
+|                             15 |
++--------------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT HOUR("2017-06-20 09:34:00");
++-----------------------------+
+| HOUR("2017-06-20 09:34:00") |
++-----------------------------+
+|                           9 |
++-----------------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT HOUR(now());
++-------------+
+| HOUR(now()) |
++-------------+
+|          15 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select last_day('2017-06-20');
++------------------------+
+| last_day('2017-06-20') |
++------------------------+
+| 2017-06-30             |
++------------------------+
+1 row in set (0.04 sec)
+
+mysql> select last_day(now());
++-----------------+
+| last_day(now()) |
++-----------------+
+| 2020-12-31      |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select localtimestamp();
++---------------------+
+| localtimestamp()    |
++---------------------+
+| 2020-12-08 15:21:48 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select makedate(2017,100);
++--------------------+
+| makedate(2017,100) |
++--------------------+
+| 2017-04-10         |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select makedate(2020,10);
++-------------------+
+| makedate(2020,10) |
++-------------------+
+| 2020-01-10        |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAKETIME(11, 35, 4);
++---------------------+
+| MAKETIME(11, 35, 4) |
++---------------------+
+| 11:35:04            |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MICROSECOND("2017-06-20 09:34:00.000023");
++-------------------------------------------+
+| MICROSECOND("2017-06-20 09:34:00.000023") |
++-------------------------------------------+
+|                                        23 |
++-------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MINUTE("2017-06-20 09:34:00");
++-------------------------------+
+| MINUTE("2017-06-20 09:34:00") |
++-------------------------------+
+|                            34 |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MONTHNAME("2017-06-15");
++-------------------------+
+| MONTHNAME("2017-06-15") |
++-------------------------+
+| June                    |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT PERIOD_ADD(201703, 5);
++-----------------------+
+| PERIOD_ADD(201703, 5) |
++-----------------------+
+|                201708 |
++-----------------------+
+1 row in set (0.04 sec)
+
+mysql> SELECT PERIOD_DIFF(201710, 201703);
++-----------------------------+
+| PERIOD_DIFF(201710, 201703) |
++-----------------------------+
+|                           7 |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT QUARTER("2017-06-15");
++-----------------------+
+| QUARTER("2017-06-15") |
++-----------------------+
+|                     2 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SEC_TO_TIME(1);
++----------------+
+| SEC_TO_TIME(1) |
++----------------+
+| 00:00:01       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT STR_TO_DATE("August 10 2017", "%M %d %Y");
++-------------------------------------------+
+| STR_TO_DATE("August 10 2017", "%M %d %Y") |
++-------------------------------------------+
+| 2017-08-10                                |
++-------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SYSDATE();
++---------------------+
+| SYSDATE()           |
++---------------------+
+| 2020-12-08 15:27:47 |
++---------------------+
+1 row in set (0.01 sec)
+
+
+mysql> SELECT TIME_FORMAT("19:30:10", "%H %i %s");
++-------------------------------------+
+| TIME_FORMAT("19:30:10", "%H %i %s") |
++-------------------------------------+
+| 19 30 10                            |
++-------------------------------------+
+1 row in set (0.04 sec)
+
+mysql> SELECT WEEK("2017-06-15");
++--------------------+
+| WEEK("2017-06-15") |
++--------------------+
+|                 24 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+mysql> SELECT YEAR("2017-06-15");
++--------------------+
+| YEAR("2017-06-15") |
++--------------------+
+|               2017 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT YEARWEEK("2017-06-15");
++------------------------+
+| YEARWEEK("2017-06-15") |
++------------------------+
+|                 201724 |
++------------------------+
+1 row in set (0.04 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
