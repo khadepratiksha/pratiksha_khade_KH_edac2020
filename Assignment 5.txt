@@ -1,0 +1,237 @@
+
+Create table EMPNEW ( EMPNO numeric(4) not null, ENAME varchar(30) not null, JOB varchar(10), MGR numeric(4), HIREDATE date, SAL numeric(7,2), DEPTNO numeric(2) ); 
+
+Insert into EMPNEW (EMPNO ,ENAME, JOB, MGR, HIREDATE, SAL,DEPTNO) values(1000,  'Manish' , 'SALESMAN', 1003,  '2020-02-18', 600,  30) ;
+Insert into  EMPNEW (EMPNO ,ENAME, JOB, MGR, HIREDATE, SAL,DEPTNO ) values(1001,  'Manoj' , 'SALESMAN', 1003,  '2018-02-18', 600,  30) ;
+Insert into  EMPNEW (EMPNO ,ENAME, JOB, MGR, HIREDATE, SAL,DEPTNO) values(1002 , 'Ashish', 'SALESMAN',1003 , '2013-02-18',  750,  30 );
+Insert into  EMPNEW (EMPNO ,ENAME, JOB, MGR, HIREDATE, SAL,DEPTNO) values(1004,  'Rekha', 'ANALYST', 1006 , '2001-02-18', 3000,  10);
+Insert into  EMPNEW (EMPNO ,ENAME, JOB, MGR, HIREDATE, SAL,DEPTNO) values(1005 , 'Sachin', 'ANALYST', 1006 ,  '2019-02-18', 3000, 10 );
+Insert into  EMPNEW (EMPNO ,ENAME, JOB, MGR, HIREDATE, SAL,DEPTNO) values(1006,  'Pooja',  'MANAGER'  ,     null    , '2000-02-18' ,6000, 10 );
+
+select *from EmpNew;
+
+mysql> select *from EmpNew;
+    -> $$
++-------+--------+----------+------+------------+---------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL     | DEPTNO |
++-------+--------+----------+------+------------+---------+--------+
+|  1000 | Manish | SALESMAN | 1003 | 2020-02-18 |  600.00 |     30 |
+|  1001 | Manoj  | SALESMAN | 1003 | 2018-02-18 |  600.00 |     30 |
+|  1002 | Ashish | SALESMAN | 1003 | 2013-02-18 |  750.00 |     30 |
+|  1004 | Rekha  | ANALYST  | 1006 | 2001-02-18 | 3000.00 |     10 |
+|  1005 | Sachin | ANALYST  | 1006 | 2019-02-18 | 3000.00 |     10 |
+|  1006 | Pooja  | MANAGER  | NULL | 2000-02-18 | 6000.00 |     10 |
++-------+--------+----------+------+------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> create procedure arithmatic(in a int,in b int)
+    -> begin
+    -> select a + b;
+    -> select b * b;
+    -> select a / b;
+    -> select a - b;
+    -> end$$
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> call arithmatic(10,5);
+    -> $$
++-------+
+| a + b |
++-------+
+|    15 |
++-------+
+1 row in set (0.00 sec)
+
++-------+
+| b * b |
++-------+
+|    25 |
++-------+
+1 row in set (0.00 sec)
+
++--------+
+| a / b  |
++--------+
+| 2.0000 |
++--------+
+1 row in set (0.00 sec)
+
++-------+
+| a - b |
++-------+
+|     5 |
++-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> create procedure restringp(in var varchar(20))
+    -> begin
+    -> select reverse(var) as rever_sestring_value;
+    -> end$$
+Query OK, 0 rows affected (0.13 sec)
+
+
+show create procedure restringp;
+mysql> call restringp('pratiksha khade');
+    -> $$
++----------------------+
+| rever_sestring_value |
++----------------------+
+| edahk ahskitarp      |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> create procedure highsal6()
+    -> begin
+    -> select EMPNO,ENAME,SAL from EMPNEW order by sal desc limit 5;
+    -> end$$
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> call highsal6();
+    -> $$
++-------+--------+---------+
+| EMPNO | ENAME  | SAL     |
++-------+--------+---------+
+|  1006 | Pooja  | 6000.00 |
+|  1004 | Rekha  | 3000.00 |
+|  1005 | Sachin | 3000.00 |
+|  1002 | Ashish |  750.00 |
+|  1000 | Manish |  600.00 |
++-------+--------+---------+
+5 rows in set (0.09 sec)
+
+Query OK, 0 rows affected (0.15 sec)
+
+
+mysql> create procedure tabltest()
+    -> begin
+    -> create table tabltest(e_id integer(10),e_name varchar(10),e_joining date);
+    -> end$$
+Query OK, 0 rows affected, 1 warning (0.21 sec)
+
+mysql> call tabltest();$$
+Query OK, 0 rows affected (1.70 sec)
+
+mysql> desc tabltest$$
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| e_id      | int         | YES  |     | NULL    |       |
+| e_name    | varchar(10) | YES  |     | NULL    |       |
+| e_joining | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.09 sec)
+
+mysql> select *from departement;
+    -> $$
++---------+-----------+------+
+| dept_id | dname     | area |
++---------+-----------+------+
+|       1 | Finance   | NULL |
+|       2 | Training  | NULL |
+|       3 | Marketing | NULL |
++---------+-----------+------+
+3 rows in set (0.05 sec)
+
+mysql> create procedure addvaluess()
+    -> begin
+    -> insert into departement values(60,'Education','Pune');
+    -> end$$
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> call addvaluess();
+    -> $$
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select *from departement;
+    -> $$
++---------+-----------+------+
+| dept_id | dname     | area |
++---------+-----------+------+
+|       1 | Finance   | NULL |
+|       2 | Training  | NULL |
+|       3 | Marketing | NULL |
+|      60 | Education | Pune |
++---------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> create procedure scube()
+    -> begin
+    -> declare num int;
+    -> set num =5;
+    -> select num as num_value;
+    -> select num*num as square;
+    -> select num*num*num as cubes_value;
+    -> end$$
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> show create procedure scube;
+
+
+mysql> call scube();
+    -> $$
++-----------+
+| num_value |
++-----------+
+|         5 |
++-----------+
+1 row in set (0.00 sec)
+
++--------+
+| square |
++--------+
+|     25 |
++--------+
+1 row in set (0.00 sec)
+
++-------------+
+| cubes_value |
++-------------+
+|         125 |
++-------------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create procedure assvalue(out var int)
+    -> begin
+    -> declare num int;
+    -> set num =50;
+    -> select num into var;
+    -> end$$
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> call assvalue(@val);
+    -> $$
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select @val;
+    -> $$
++------+
+| @val |
++------+
+|   50 |
++------+
+1 row in set (0.04 sec)
+
+mysql> create procedure var_in_out(in a int,out var int)
+    -> begin
+    -> select a into var;
+    -> end$$
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> call var_in_out(60,@num);
+    -> $$
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @num;
+    -> $$
++------+
+| @num |
++------+
+|   60 |
++------+
+1 row in set (0.00 sec)
+
