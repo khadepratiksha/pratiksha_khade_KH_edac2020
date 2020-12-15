@@ -1,0 +1,122 @@
+delimiter ##
+create function funfact(i int) returns int
+begin
+declare num int default 1;
+while i >0
+do
+set num = num * i;
+set i=i - 1;
+end while;
+return num;
+End ##
+
+mysql> select funfact(5);
++------------+
+| funfact(5) |
++------------+
+|        120 |
++------------+
+1 row in set (0.00 sec)
+*********************************************************
+
+delimiter $$
+create function Q21(num integer) returns varchar(50)
+begin
+declare i integer default 2;
+declare flag integer default 1;
+while i < num
+do
+if num%i =0 then
+set flag = 0;
+end if;
+ set i= i + 1;
+end while;
+if flag = 1 then 
+return "prime number";
+else
+return " not prime number";
+end if;
+end$$
+
+select Q21(8);
+
+
+delimiter $$
+create function conversion(numb int(5)) returns varchar(50)
+begin
+return CONCAT(round(numb/31),' Inches ',round(numb/36),' Yards ',round(numb/124),' Foot ');
+end $$
+select conversion(124);
+
+******************************************************
+delimiter $$
+CREATE FUNCTION Employee11() RETURNS VARCHAR(50)
+BEGIN
+SET SQL_SAFE_UPDATES=0;
+UPDATE employee1 SET salary=(salary+(salary*0.1)) WHERE dept_id=1;
+RETURN 'UPDATED';
+END$$
+SELECT Employee11();
+SELECT * FROM employee1;
+*********************************************************
+
+delimiter $$
+create function USER_ANNUAL_COMP (p_eno int,p_comp int) returns int
+begin
+declare annual_com,salary1 int;
+set salary1=(select(salary) from employee1 WHERE emp_id=p_eno);
+SET annual_com= (salary1+ p_comp)*12;
+RETURN annual_com;
+END$$
+SELECT salary FROM employee1 WHERE emp_id=102;
+SELECT USER_ANNUAL_COMP(102,200);
+
+************************************************************
+
+
+delimiter $$
+create procedure tabledetails()
+begin
+show tables;
+end $$
+call tabledetails;
+delimiter $$
+
+**********************************************************
+
+delimiter $$
+ create procedure revString(in str1 varchar(20),out rev varchar(20))
+ begin
+ if isNULL(str1) then
+ set rev="Given string is null";
+ else
+ set rev =(select reverse(str1));
+ end if;
+end $$
+set @str1="REVERSE";
+call revString(@str1,@rev);
+select @rev;
+delimiter $$
+
+*********************************************************
+
+delimiter $$
+CREATE PROCEDURE USER_QUERY_EMP  (IN P_MYENO INT, OUT P_Name VARCHAR(10), OUT P_MYSAL INT3 ) 
+BEGIN
+DECLARE NO INT;
+SET NO = (SELECT COUNT(*) FROM employee1 WHERE emp_id=P_MYENO);
+IF NO=0 THEN 
+SELECT 'employee not exists';
+SET P_name='';
+SET P_MYSAL=0;
+ELSE 
+SELECT salary,ename INTO P_MYSAL,P_name FROM employee1 WHERE emp_id=P_MYENO;
+END IF;
+END$$
+CALL USER_QUERY_EMP(102,@JOB,@SAL);
+SELECT @JOB,@SAL
+
+
+
+
+
