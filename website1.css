@@ -1,0 +1,92 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body{
+	background-image: url("https://cdn.pixabay.com/photo/2016/03/09/09/15/space-1245699_960_720.jpg");
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	
+	font-family: sans-serif;
+}
+
+.menu-bar{
+	background-color: rgb(0,0,0,0.7);
+	
+}
+
+.menu-bar ul{
+	display: inline-flex;
+		list-style: none;
+		color: white;
+
+}
+
+.menu-bar ul li{
+	width: 100px;
+	margin: 10px;
+	padding: 4px;
+
+}
+
+.menu-bar ul li a{
+	text-decoration: none;
+	color: white;
+	top: 0px;
+
+}
+
+.menu-bar ul li:hover
+{
+	background:#4EE2EC;
+	border-radius: 6px;
+	box-shadow:0 0 5px #4EE2EC,
+			0 0 25px #4EE2EC,
+			0 0 50px #4EE2EC,
+			0 0 200px #4EE2EC;
+}
+
+.container {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.menu-bar .fa
+{
+	margin-right: 8px;
+}
+
+.pre {
+	display: none;
+}
+
+
+
+.menu-bar ul li:hover .pre{
+	display: block;
+	position: absolute;
+	background:rgb(0,0,0,0.7);
+	margin-top: 5px;
+	margin-left: -15px;
+}
+
+.menu-bar ul li:hover .pre ul{
+	display: block;
+	margin: 10px;
+}
+
+.MBE:hover{
+box-shadow:0 0 5px #4EE2EC,
+			0 0 25px #4EE2EC,
+			0 0 50px #4EE2EC,
+			0 0 200px #4EE2EC;
+}
+
+img{
+	
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+}
