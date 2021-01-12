@@ -1,0 +1,84 @@
+Q3
+2==2
+
+2===3
+2===2
+
+Ans:
+2==2
+true
+2==2
+
+2===3
+false
+2==2
+
+2===3
+2===2
+true
+***************************************************************
+Q4
+typeof(2)==typeof(2);
+typeof(2)==typeof("2");
+ typeof(2)==typeof(3);
+Ans: 
+
+ typeof(2)==typeof(2);
+true
+
+typeof(2)==typeof("2");
+false
+
+ typeof(2)==typeof(3);
+true
+
+************************************************************
+Q5 var arr=[10,20,30,40,50,60,70];
+
+for(var i=0;i<arr.length;i++)
+  {
+    console.log(i);
+  }
+Ans:
+var arr=[10,20,30,40,50,60,70];
+
+for(var i=0;i<arr.length;i++)
+  {
+    console.log(i);
+  }
+0 debugger eval code:5:13
+1 debugger eval code:5:13
+2 debugger eval code:5:13
+3 debugger eval code:5:13
+4 debugger eval code:5:13
+5 debugger eval code:5:13
+6 debugger eval code:5:13
+
+var fruits=["apple","orange","cherry"];
+fruits.forEach(myFunction);
+
+function myFunction(item,index){
+  console.log(index+" "+item);
+}
+0 apple debugger eval code:5:11
+1 orange debugger eval code:5:11
+2 cherry
+
+
+**************************************************************
+Q6
+Ans:
+
+Date();
+"Thu Jan 07 2021 18:18:50 GMT+0530 (India Standard Time)"
+
+var d=new Date();
+var m=d.getDate();
+
+m;
+7
+
+***************************************************************
+
+
+
